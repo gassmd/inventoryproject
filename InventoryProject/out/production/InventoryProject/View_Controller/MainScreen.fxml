@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="367.0" prefWidth="1101.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View_Controller.MainScreenController">
+                    <!--Parts Table-->
+            <Label layoutX="70.0" layoutY="45.0" text="Parts">      <!--Parts label-->
+                <font>
+                    <Font size="18.0" />
+                </font>
+            </Label>
+                                              <!-- Search Button/Textfield-->
+            <HBox layoutX="270.0" layoutY="40.0">
+                <Button onAction="#partSearchBtnMain" prefHeight="40.0" prefWidth="100.0" text="Search" />
+                     <TextField fx:id="PartsSearchFieldMain">
+                         <HBox.margin>
+                             <Insets left="20.0" />
+                         </HBox.margin>
+                     </TextField>
+            </HBox>
+
+            <TableView fx:id="PartsTableMain" layoutX="50.0" layoutY="90.0" prefHeight="200.0" prefWidth="500.0">    <!--Parts Table-->
+                <columns>
+                    <TableColumn fx:id="PartIdColPartsTableMain" prefWidth="120.0" text="Part ID" />
+                    <TableColumn fx:id="PartNameColPartsTableMain" prefWidth="120.0" text="Part Name" />
+                    <TableColumn fx:id="InventoryLevelColPartsTableMain" prefWidth="130.0" text="Inventory Level" />
+                    <TableColumn fx:id="PriceColPartsTableMain" prefWidth="135.0" text="Price/Cost per Unit" />
+                </columns>
+        </TableView>
+                                        <!-- Parts Add/Mod/Del buttons -->
+            <HBox layoutX="180.0" layoutY="300.0" spacing="15">
+                <Button onAction="#partAddBtnMain" prefHeight="40.0" prefWidth="100.0" text="Add" />
+                <Button onAction="#partModifyBtnMain" prefHeight="40.0" prefWidth="100.0" text="Modify" />
+                <Button onAction="#partDeleteBtnMain" prefHeight="40.0" prefWidth="100.0" text="Delete" />
+            </HBox>
+
+                                                                      <!-- Product Table -->
+        <Label layoutX="630.0" layoutY="45.0" text="Products">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Label>
+
+        <HBox layoutX="820.0" layoutY="40.0">           <!-- Search button/field -->
+            <Button onAction="#productSearchBtnMain" prefHeight="40.0" prefWidth="100.0" text="Search" />
+            <TextField fx:id="ProductsSearchFieldMain">
+                <HBox.margin>
+                    <Insets left="20.0" />
+                </HBox.margin>
+            </TextField>
+        </HBox>
+
+        <TableView fx:id="ProductsTableMain" layoutX="587.0" layoutY="90.0" prefHeight="200.0" prefWidth="500.0">       <!-- Table -->
+            <columns>
+                <TableColumn fx:id="ProductIdColProductsTableMain" prefWidth="120.0" text="Product ID" />
+                <TableColumn fx:id="ProductNameColProductsTableMain" prefWidth="120.0" text="Product Name" />
+                <TableColumn fx:id="InventoryLevelColProductsTableMain" prefWidth="130.0" text="Inventory Level" />
+                <TableColumn fx:id="PriceColProductsTableMain" prefWidth="135.0" text="Price per unit" />
+            </columns>
+        </TableView>
+                                    <!-- Product add/mod/del buttons-->
+        <HBox layoutX="730.0" layoutY="300.0" spacing="15">
+            <Button onAction="#productAddBtnMain" prefHeight="40.0" prefWidth="100.0" text="Add" />
+            <Button onAction="#productModifyBtnMain" prefHeight="40.0" prefWidth="100.0" text="Modify" />
+            <Button onAction="#productDeleteBtnMain" prefHeight="40.0" prefWidth="100.0" text="Delete" />
+        </HBox>
+
+
+</AnchorPane>

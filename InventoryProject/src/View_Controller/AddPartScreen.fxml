@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="518.0" prefWidth="403.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View_Controller.AddPartScreenController">
+   <children>
+      <Label layoutX="28.0" layoutY="30.0" prefHeight="29.0" prefWidth="71.0" text="Add Part">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Label>
+      <RadioButton layoutX="132.0" layoutY="36.0" mnemonicParsing="false" onAction="#inHouseRadioAddPart" text="In-House">
+         <toggleGroup>
+            <ToggleGroup fx:id="tog" />
+         </toggleGroup></RadioButton>
+      <RadioButton layoutX="237.0" layoutY="36.0" mnemonicParsing="false" onAction="#outsourcedRadioAddPart" text="Outsourced" toggleGroup="$tog" />
+      <HBox alignment="CENTER" layoutX="45.0" layoutY="80.0" prefHeight="59.0" prefWidth="313.0" spacing="140.0">
+         <children>
+            <Label prefHeight="54.0" prefWidth="15.0" text="ID" />
+            <TextField fx:id="IdFieldAddPart" disable="true" editable="false" prefHeight="33.0" prefWidth="129.0" text="Auto Gen - Disabled">
+               <font>
+                  <Font name="System Italic" size="12.0" />
+               </font>
+            </TextField>
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" layoutX="46.0" layoutY="139.0" prefHeight="59.0" prefWidth="313.0" spacing="125.0">
+         <children>
+            <Label prefHeight="54.0" prefWidth="35.0" text="Name" />
+            <TextField fx:id="NameFieldAddPart" prefHeight="33.0" prefWidth="129.0" promptText="Part Name">
+               <font>
+                  <Font name="System Italic" size="12.0" />
+               </font>
+            </TextField>
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" layoutX="45.0" layoutY="198.0" prefHeight="59.0" prefWidth="313.0" spacing="140.0">
+         <children>
+            <Label prefHeight="54.0" prefWidth="19.0" text="Inv" />
+            <TextField fx:id="InvFieldAddPart" prefHeight="33.0" prefWidth="129.0" promptText="Inv">
+               <font>
+                  <Font name="System Italic" size="12.0" />
+               </font>
+            </TextField>
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" layoutX="46.0" layoutY="257.0" prefHeight="59.0" prefWidth="313.0" spacing="90.0">
+         <children>
+            <Label prefHeight="54.0" prefWidth="68.0" text="Price/Cost" />
+            <TextField fx:id="PriceFieldAddPart" prefHeight="33.0" prefWidth="129.0" promptText="Price/Cost">
+               <font>
+                  <Font name="System Italic" size="12.0" />
+               </font>
+            </TextField>
+         </children>
+      </HBox>
+      <HBox prefHeight="100.0" prefWidth="116.0" />
+      <HBox alignment="CENTER" layoutX="46.0" layoutY="316.0" prefHeight="59.0" prefWidth="313.0">
+         <children>
+            <Label prefHeight="54.0" prefWidth="37.0" text="Max" />
+            <TextField fx:id="MaxFieldAddPart" prefHeight="33.0" prefWidth="75.0" promptText="Max">
+               <font>
+                  <Font name="System Italic" size="12.0" />
+               </font>
+            </TextField>
+            <Label alignment="CENTER" prefHeight="54.0" prefWidth="56.0" text="Min" />
+            <TextField fx:id="MinFieldAddPart" prefHeight="33.0" prefWidth="75.0" promptText="Min">
+               <font>
+                  <Font name="System Italic" size="12.0" />
+               </font>
+            </TextField>
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" layoutX="44.0" layoutY="375.0" prefHeight="59.0" prefWidth="313.0" spacing="75.0">
+         <children>
+            <Label fx:id="CompIdLabelToggle" prefHeight="54.0" prefWidth="88.0" text="Machine Id / Company Name" wrapText="true" />
+            <TextField fx:id="CompFieldAddPart" prefHeight="33.0" prefWidth="129.0" promptText="Select Part Type">
+               <font>
+                  <Font name="System Italic" size="12.0" />
+               </font>
+            </TextField>
+         </children>
+      </HBox>
+      <HBox layoutX="168.0" layoutY="443.0" prefHeight="44.0" prefWidth="211.0" spacing="20.0">
+         <children>
+            <Button mnemonicParsing="false" onAction="#saveBtnAddPart" prefHeight="40.0" prefWidth="94.0" text="Save" />
+            <Button mnemonicParsing="false" onAction="#cancelBtnAddPart" prefHeight="40.0" prefWidth="94.0" text="Cancel" />
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>
