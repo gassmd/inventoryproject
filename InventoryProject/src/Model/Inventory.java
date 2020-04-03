@@ -33,7 +33,7 @@ public class Inventory {
             }
         }
         else{
-            for (int i = 0; i < allParts.size(); i++){
+            for (int i = 0; i < allParts.size(); i++){          // search
                 search = search.toLowerCase();
                 if (search.equals(allParts.get(i).getName().toLowerCase())){
                     index = i;
@@ -50,49 +50,52 @@ public class Inventory {
         }
     }
 
-    public static Product lookupProduct(int productId){
-        for (Product p : allProducts){
-            if(p.getId() == productId){
-                return p;
+    public static int lookupProduct(String searchTerm){
+        boolean isFound = false;
+        int index = 0;
+        if (integerCheck(searchTerm)){
+            for(int i = 0; i < allProducts.size(); i++){                                // searches products by Id if search term is integer, by name otherwise
+                if (Integer.parseInt(searchTerm) == allProducts.get(i).getId()){
+                    index = i;
+                    isFound = true;
+                }
             }
         }
-        return null;
+        else{
+            for (int i = 0; i < allProducts.size(); i++){
+                if (searchTerm.equals(allProducts.get(i).getName())){
+                    index = i;
+                    isFound = true;
+                }
+            }
+        }
+        if (isFound == true){
+            return index;
+        }
+        else {
+            System.out.println("No products found");
+            return -1;
+        }
     }
 
     public static boolean integerCheck(String input){
         try{
             Integer.parseInt(input);
-            return true;
+            return true;                                                    // check if input is integer to return Id
         }
         catch (Exception e){
             return false;
         }
     }
 
-  /*  public static ObservableList<Part> lookupPart(String partName){
-        for (Part p : allParts){
-            if(p.getName().equals(partName)){
-                return (ObservableList<Part>) p;
-            }
-        }
-        return null;
-    }*/
 
-    public static ObservableList<Product> lookupProduct(String productName){
-        for (Product p : allProducts){
-            if(p.getName().equals(productName)){
-                return (ObservableList<Product>) p;
-            }
-        }
-        return null;
-    }
 
     public static void updatePart(int index, Part selectedPart){
-        allParts.set(selectedPart.getId(), selectedPart);
-    }
+        allParts.set(index, selectedPart);
+    }                                                                           // updates selected part/product
 
-    public static void updateProduct(int index, Product newProduct) {
-        allProducts.set(newProduct.getId(), newProduct);
+    public static void updateProduct(int index, Product selectedProduct) {
+        allProducts.set(index, selectedProduct);
     }
 
     public static boolean deletePart(Part selectedPart){
@@ -102,7 +105,7 @@ public class Inventory {
                 return true;
             }
         }
-        return false;
+        return false;                                                       // deletes part/product and returns true if found, else returns false
     }
 
     public static boolean deleteProduct(Product selectedProduct){
@@ -118,7 +121,7 @@ public class Inventory {
     public static int getPartIdCount(){
         partIdCount++;
         return partIdCount;
-    }
+    }                                                                      // returns part/product autogen ids
 
     public static int getProductIdCount(){
         productIdCount++;
@@ -127,7 +130,7 @@ public class Inventory {
 
     public static ObservableList<Part> getAllParts(){
         return allParts;
-    }
+    }                                                                   // returns parts/products lists
 
     public static ObservableList<Product> getAllProducts(){
         return allProducts;

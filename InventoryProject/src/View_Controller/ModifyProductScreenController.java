@@ -27,13 +27,13 @@ import static Model.Inventory.getAllProducts;
 
 public class ModifyProductScreenController implements Initializable {
 
-    private TextField SearchFieldModifyProduct;
     private ObservableList<Part> partsList = FXCollections.observableArrayList();
     private int modifyIndex = getModifyProductIndex();
     private String errorMessage = new String();
     private int productId;
 
-
+    @FXML
+    private TextField SearchFieldModifyProduct;
     @FXML
     private Label IdLabelModifyProduct;
     @FXML
@@ -49,7 +49,7 @@ public class ModifyProductScreenController implements Initializable {
     @FXML
     private TableView<Part> AddTableModifyProduct;
     @FXML
-    private TableColumn<Part, Integer> IdColAddTableModifyProduct;
+    private TableColumn<Part, Integer> IdColAddTableModifyProduct;                  // button / field declarations
     @FXML
     private TableColumn<Part, String> NameColAddTableModifyProduct;
     @FXML
@@ -68,14 +68,12 @@ public class ModifyProductScreenController implements Initializable {
     private TableColumn<Part, Double> PriceColDeleteTableModifyProduct;
 
     public void addBtnModifyProduct(ActionEvent event) {
-        System.out.println("Add btn modify product");
-        Part part = AddTableModifyProduct.getSelectionModel().getSelectedItem();
+        Part part = AddTableModifyProduct.getSelectionModel().getSelectedItem();            // adds modified product
         partsList.add(part);
         updateDeletePartsTable();
     }
 
     public void deleteBtnModifyProduct(ActionEvent event) {
-        System.out.println("delete btn modify product");
         Part part = DeleteTableModifyProduct.getSelectionModel().getSelectedItem();
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.initModality(Modality.NONE);
@@ -83,34 +81,28 @@ public class ModifyProductScreenController implements Initializable {
         alert.setHeaderText("Confirm");
         alert.setContentText("Delete " + part.getName() + " From parts?");
         Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == ButtonType.OK){
+        if (result.get() == ButtonType.OK) {
             partsList.remove(part);
-        }
-        else{
-            System.out.println("You clicked cancel");
         }
     }
 
-    public void saveBtnModifyProduct(ActionEvent event) throws IOException{
-        System.out.println("save btn modify product");
+    public void saveBtnModifyProduct(ActionEvent event) throws IOException {
         String productName = NameFieldModifyProduct.getText();
         String productInv = InvFieldModifyProduct.getText();
         String productPrice = PriceFieldModifyProduct.getText();
         String productMin = MinFieldModifyProduct.getText();
         String productMax = MaxFieldModifyProduct.getText();
 
-        try{
+        try {
             errorMessage = Product.productValidation(productName, Integer.parseInt(productMin), Integer.parseInt(productMax), Integer.parseInt(productInv), Double.parseDouble(productPrice), partsList, errorMessage);
-            if (errorMessage.length() > 0){
+            if (errorMessage.length() > 0) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Error");
                 alert.setHeaderText("Error Modifying Product");
-                alert.setContentText(errorMessage);
+                alert.setContentText(errorMessage);                     // saves modified product
                 alert.showAndWait();
                 errorMessage = "";
-            }
-            else {
-                System.out.println("Product name: " + productName);
+            } else {
                 Product product = new Product();
                 product.setId(productId);
                 product.setName(productName);
@@ -122,8 +114,7 @@ public class ModifyProductScreenController implements Initializable {
 
                 showMainScreen(event);
             }
-        }
-        catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Error");
             alert.setHeaderText("Error Modifying Product");
@@ -133,34 +124,28 @@ public class ModifyProductScreenController implements Initializable {
     }
 
     public void cancelBtnModifyProduct(ActionEvent event) throws IOException {
-        System.out.println("cancel btn modify product");
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.initModality(Modality.NONE);
         alert.setTitle("Cancel Modify");
         alert.setHeaderText("Confirm Cancel");
-        alert.setContentText("Cancel modifying product?");
+        alert.setContentText("Cancel modifying product?");                                          // cancel confirmation
         Optional<ButtonType> result = alert.showAndWait();
 
-        if (result.get() == ButtonType.OK){
+        if (result.get() == ButtonType.OK) {
             showMainScreen(event);
-        }
-        else{
-            System.out.println("You clicked cancel");
         }
     }
 
     public void searchBtnModifyProduct(ActionEvent event) {
-        System.out.println("search btn modify product");
         String search = SearchFieldModifyProduct.getText();
         int index = -1;
-        if (Inventory.lookupPart(search) == -1){
+        if (Inventory.lookupPart(search) == -1) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Search error");
             alert.setHeaderText("Part not found");
-            alert.setContentText("Search term not found");
+            alert.setContentText("Search term not found");                                      // searches part list for matching term
             alert.showAndWait();
-        }
-        else{
+        } else {
             index = Inventory.lookupPart(search);
             Part part = Inventory.getAllParts().get(index);
             ObservableList<Part> partList = FXCollections.observableArrayList();
@@ -172,10 +157,20 @@ public class ModifyProductScreenController implements Initializable {
     public void showMainScreen(ActionEvent event) throws IOException {
         Parent mainScreen = FXMLLoader.load(getClass().getResource("MainScreen.fxml"));
         Scene scene = new Scene(mainScreen);
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();                   // shows main screen
         window.setScene(scene);
         window.show();
     }
+
+    public void updateAddPartsTable() {
+        AddTableModifyProduct.setItems(getAllParts());
+    }
+
+    // updates tables
+    public void updateDeletePartsTable() {
+        DeleteTableModifyProduct.setItems(partsList);
+    }
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -198,13 +193,5 @@ public class ModifyProductScreenController implements Initializable {
         PriceColDeleteTableModifyProduct.setCellValueFactory(cellData -> cellData.getValue().priceProperty().asObject());
         updateAddPartsTable();
         updateDeletePartsTable();
-    }
-
-    public void updateAddPartsTable(){
-        AddTableModifyProduct.setItems(getAllParts());
-    }
-
-    public void updateDeletePartsTable(){
-        DeleteTableModifyProduct.setItems(partsList);
     }
 }

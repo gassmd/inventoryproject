@@ -27,7 +27,7 @@ public class Product {
 
     public void setId(int id) {                      //setters
         this.id.set(id);
-    }
+    }                                   //setters
 
     public void setName(String name) {
         this.name.set(name);
@@ -52,7 +52,7 @@ public class Product {
 
     public int getId() {                         // getters
         return this.id.get();
-    }
+    }                                   //getters
 
     public String getName() {
         return this.name.get();
@@ -118,19 +118,19 @@ public class Product {
         }
 
         if (name == null) {
-            errorMessage = errorMessage + ("Name field blank");
+            errorMessage = errorMessage + ("Name field blank \n");
         }
         if (min > max) {
-            errorMessage = errorMessage + ("Inventory minimum must be less than maximum");
+            errorMessage = errorMessage + ("Inventory minimum must be less than maximum \n");
         }
         if (inv < min || inv > max) {
-            errorMessage = errorMessage + ("Inventory must be between min and max values");
+            errorMessage = errorMessage + ("Inventory must be between min and max values \n");      //error message
         }
         if (inv < 1) {
-            errorMessage = errorMessage + ("Inventory must be greater than 0");
+            errorMessage = errorMessage + ("Inventory must be greater than 0 \n");
         }
         if (price < 1) {
-            errorMessage = errorMessage + ("Price must be greater than 0");
+            errorMessage = errorMessage + ("Price must be greater than 0 \n");
         }
 
         return errorMessage;

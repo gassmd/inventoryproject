@@ -97,19 +97,19 @@ public abstract class Part {
 
     public static String partValidation(String name, int min, int max, int inv, double price, String errorMessage) {
         if (name == null) {
-            errorMessage = errorMessage + ("Name field blank");
+            errorMessage = errorMessage + ("Name field blank \n");
         }
         if (min > max) {
-            errorMessage = errorMessage + ("Inventory minimum must be less than maximum");
+            errorMessage = errorMessage + ("Inventory minimum must be less than maximum \n");
         }
         if (inv < min || inv > max) {
-            errorMessage = errorMessage + ("Inventory must be between min and max values");
+            errorMessage = errorMessage + ("Inventory must be between min and max values \n");      // creates error message
         }
         if (inv < 1) {
-            errorMessage = errorMessage + ("Inventory must be greater than 0");
+            errorMessage = errorMessage + ("Inventory must be greater than 0 \n");
         }
         if (price < 1) {
-            errorMessage = errorMessage + ("Price must be greater than 0");
+            errorMessage = errorMessage + ("Price must be greater than 0 \n");
         }
 
         return errorMessage;

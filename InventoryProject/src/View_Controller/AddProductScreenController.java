@@ -67,42 +67,30 @@ public class AddProductScreenController implements Initializable {
     private int productId;
     private ObservableList<Part> partsList = FXCollections.observableArrayList();
 
-    @FXML
-    void clearSearch(ActionEvent event){
-        updateAddTableView();
-        AddProductSearchField.setText("");
-    }
 
     @FXML
     void addBtnAddProduct(ActionEvent event){
-        System.out.println("Add btn add product");
         Part part = AddTableAddProduct.getSelectionModel().getSelectedItem();
-        partsList.add(part);
+        partsList.add(part);                                                                // updates and adds product to table
         updateDeleteTableView();
     }
 
     @FXML
     void deleteBtnAddProduct(ActionEvent event) {
-        System.out.println("delete btn add product");
         Part part = DeleteTableAddProduct.getSelectionModel().getSelectedItem();
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.initModality(Modality.NONE);
         alert.setTitle("Part Deletion");
         alert.setHeaderText("Confirm deletion");
-        alert.setContentText("Delete " + part.getName() + " from parts?");
+        alert.setContentText("Delete " + part.getName() + " from parts?");                  // deletion confirmation
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == ButtonType.OK){
-            System.out.println("Part deleted");
             partsList.remove(part);
-        }
-        else{
-            System.out.println("You clicked cancel");
         }
     }
 
     @FXML
     void saveBtnAddProduct(ActionEvent event) throws IOException {
-        System.out.println("save btn add product");
         String productName = NameFieldAddProduct.getText();
         String productInv = InvFieldAddProduct.getText();
         String productPrice = PriceFieldAddProduct.getText();
@@ -110,7 +98,7 @@ public class AddProductScreenController implements Initializable {
         String productMin = MinFieldAddProduct.getText();
 
         try{
-            errorMessage = Product.productValidation(productName, Integer.parseInt(productMin), Integer.parseInt(productMax), Integer.parseInt(productInv), Double.parseDouble(productPrice), partsList, errorMessage );
+            errorMessage = Product.productValidation(productName, Integer.parseInt(productMin), Integer.parseInt(productMax), Integer.parseInt(productInv), Double.parseDouble(productPrice), partsList, errorMessage);
             if (errorMessage.length() > 0){
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Error");
@@ -119,7 +107,6 @@ public class AddProductScreenController implements Initializable {
                 alert.showAndWait();
                 errorMessage = "";
             } else{
-                System.out.println("Product name: " + productName);
                 Product product = new Product();
                 product.setId(productId);
                 product.setName(productName);
@@ -147,32 +134,27 @@ public class AddProductScreenController implements Initializable {
 
     @FXML
     void cancelBtnAddProduct(ActionEvent event) throws IOException {
-        System.out.println("cancel btn add product");
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.initModality(Modality.NONE);
         alert.setTitle("Cancel add product");
         alert.setHeaderText("Confirm Cancel");
-        alert.setContentText("Cancel adding new product?");
+        alert.setContentText("Cancel adding new product?");                      // cancel confirmation
         Optional<ButtonType> result = alert.showAndWait();
 
         if (result.get() == ButtonType.OK) {
             showMainScreen(event);
         }
-        else{
-            System.out.println("cancel clicked");
-        }
     }
 
     @FXML
     void searchBtnAddProduct(ActionEvent event) {
-        System.out.println("search btn add product");
         String searchTerm = AddProductSearchField.getText();
         int index = -1;
         if (Inventory.lookupPart(searchTerm) == -1){
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Search error");
             alert.setHeaderText("Part not found");
-            alert.setContentText("Search term not found");
+            alert.setContentText("Search term not found");                      // searches through list to return search term
             alert.showAndWait();
         }
         else {
@@ -185,7 +167,7 @@ public class AddProductScreenController implements Initializable {
     }
 
     public void showMainScreen(ActionEvent event) throws IOException {
-        Parent mainScreen = FXMLLoader.load(getClass().getResource("MainScreen.fxml"));
+        Parent mainScreen = FXMLLoader.load(getClass().getResource("MainScreen.fxml"));             //shows main screen
         Scene scene = new Scene(mainScreen);
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(scene);
@@ -193,7 +175,7 @@ public class AddProductScreenController implements Initializable {
     }
 
     public void updateAddTableView(){
-        AddTableAddProduct.setItems(getAllParts());
+        AddTableAddProduct.setItems(getAllParts());                                         //update table views
     }
 
     public void updateDeleteTableView(){

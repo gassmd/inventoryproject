@@ -6,6 +6,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+/*
+Michael Gass mgass2@my.wgu.edu
+C482 WGU
+Software I Inventory Project
+ */
+
 public class MainScreen extends Application {
 
     @Override
@@ -19,7 +25,7 @@ public class MainScreen extends Application {
 
     public static void main(String[] args) {
         launch(args);
-    }
+    }               // Main launch method
 
 
 }

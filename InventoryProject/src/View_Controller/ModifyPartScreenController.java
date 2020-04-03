@@ -38,7 +38,7 @@ public class ModifyPartScreenController implements Initializable {
     @FXML
     private TextField ModifyPartMinField;
     @FXML
-    private TextField ModifyPartTypeField;
+    private TextField ModifyPartTypeField;                                  //button / field declarations
 
     @FXML
     private Label ModifyPartTypeLabel;
@@ -69,7 +69,6 @@ public class ModifyPartScreenController implements Initializable {
         ModifyPartTypeField.setText("");
         ModifyPartTypeField.setPromptText("Machine ID");
 
-        System.out.println("inhouse Radio Modify Btn");
     }
 
     @FXML
@@ -79,16 +78,14 @@ public class ModifyPartScreenController implements Initializable {
         ModifyPartTypeLabel.setText("Company Name");
         ModifyPartTypeField.setText("");
         ModifyPartTypeField.setPromptText("Company Name");
-        System.out.println("outsourced Radio Modify Btn");
     }
 
     @FXML
     private void saveBtnModifyPart(ActionEvent event) throws IOException {
-        System.out.println("Save btn modify part");
         String partName = ModifyPartNameField.getText();
         String partInv = ModifyPartInvField.getText();
         String partPrice = ModifyPartPriceField.getText();
-        String partMin = ModifyPartMinField.getText();
+        String partMin = ModifyPartMinField.getText();                                  // saves modified part
         String partMax = ModifyPartMaxField.getText();
         String partType = ModifyPartTypeField.getText();
 
@@ -104,7 +101,6 @@ public class ModifyPartScreenController implements Initializable {
             }
             else{
                 if (isOutsourced == false){
-                    System.out.println("Part name: " + partName);
                     InHousePart inHousePart = new InHousePart();
                     inHousePart.setId(partId);
                     inHousePart.setName(partName);
@@ -116,7 +112,6 @@ public class ModifyPartScreenController implements Initializable {
                     Inventory.updatePart(modifyIndex, inHousePart);
                 }
                 else{
-                    System.out.print("Part name: " + partName);
                     OutsourcedPart outsourcedPart = new OutsourcedPart();
                     outsourcedPart.setId(partId);
                     outsourcedPart.setName(partName);
@@ -149,22 +144,19 @@ public class ModifyPartScreenController implements Initializable {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.initModality(Modality.NONE);
         alert.setTitle("Cancel Modify");
-        alert.setHeaderText("Confirm Cancel");
+        alert.setHeaderText("Confirm Cancel");                                                  // cancel confirmation
         alert.setContentText("Cancel modifying part?");
         Optional<ButtonType> result = alert.showAndWait();
 
         if (result.get() == ButtonType.OK){
             showMainScreen(event);
         }
-        else{
-            System.out.println("You clicked cancel");
-        }
     }
 
     public void showMainScreen(ActionEvent event) throws IOException {
         Parent mainScreen = FXMLLoader.load(getClass().getResource("MainScreen.fxml"));
         Scene scene = new Scene(mainScreen);
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();                   // return to main screen
         window.setScene(scene);
         window.show();
     }

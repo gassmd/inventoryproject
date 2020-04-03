@@ -28,7 +28,7 @@ import java.util.ResourceBundle;
 public class MainScreenController implements Initializable {
 
     private static Part modifyPart;
-    private static int modifyPartIndex;2w
+    private static int modifyPartIndex;
     private static Product modifyProduct;
     private static int modifyProductIndex;
 
@@ -60,7 +60,6 @@ public class MainScreenController implements Initializable {
     private TableColumn<Product, Double> PriceColProductsTableMain;
 
 
-
     @FXML
     void partSearchBtnMain(ActionEvent event) throws IOException {
         String searchPart = PartsSearchFieldMain.getText();
@@ -70,7 +69,7 @@ public class MainScreenController implements Initializable {
             alert.setTitle("Search Error");
             alert.setHeaderText("Part not found!");
             alert.setContentText("Search term not found");
-            alert.showAndWait();
+            alert.showAndWait();                                                    // searches through part list for all parts
         } else {
             partIndex = Inventory.lookupPart(searchPart);
             Part temp = Inventory.getAllParts().get(partIndex);
@@ -83,59 +82,66 @@ public class MainScreenController implements Initializable {
             alert.setContentText("'OK' to continue");
             alert.showAndWait();
         }
-        System.out.println("Part search button pressed!");
     }
 
     @FXML
-    void partAddBtnMain(ActionEvent event) throws IOException{
-        System.out.println("Part add button pressed!");
-        showAddPartScreen(event);
+    void partAddBtnMain(ActionEvent event) throws IOException {
+        showAddPartScreen(event);                                   // goes to add part screen
     }
 
     @FXML
     void partModifyBtnMain(ActionEvent event) throws IOException {
-            System.out.println("Part modify pressed!");
-            showModifyPartScreen(event);
+        showModifyPartScreen(event);                                    // goes to modify part screen
     }
 
     @FXML
-    void partDeleteBtnMain(ActionEvent event) throws IOException{
-            System.out.println("Part delete pressed!");
-            Part part = PartsTableMain.getSelectionModel().getSelectedItem();
-       /* if (deletePart(part)){
+    void partDeleteBtnMain(ActionEvent event) throws IOException {
+        Part part = PartsTableMain.getSelectionModel().getSelectedItem();
+       if (deletePart(part)){
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Delete error");
             alert.setHeaderText("Part cannot be deleted");
             alert.setContentText("Part currently in use");
             alert.showAndWait();
         }
-        else{*/
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.initModality(Modality.NONE);
-                alert.setTitle("Part Deletion");
-                alert.setHeaderText("Confirm?");
-                alert.setContentText("Are you sure you want to delete " + part.getName() + "?");
-                Optional<ButtonType> result = alert.showAndWait();
-                if (result.get() == ButtonType.OK){
-                    deletePart(part);
-                    updatePartsTable();
-                    System.out.println("Part " + part.getName() + " removed.");
-                }
-                else{
-                    System.out.println("Part " + part.getName() + " was not removed.");
-                }
-            }
+        else{
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);                  // handles part deletion
+        alert.initModality(Modality.NONE);
+        alert.setTitle("Part Deletion");
+        alert.setHeaderText("Confirm?");
+        alert.setContentText("Are you sure you want to delete " + part.getName() + "?");
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK) {
+            deletePart(part);
+            updatePartsTable();
+            System.out.println("Part " + part.getName() + " removed.");
+        } else {
+            System.out.println("Part " + part.getName() + " was not removed.");
+        }
+    }
+
+}
 
 
     @FXML
     void productSearchBtnMain(ActionEvent event){
-
+        String search = ProductsSearchFieldMain.getText();
+        int index = -1;
+        if (Inventory.lookupProduct(search)== -1){
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Search error");
+            alert.setHeaderText("Product not found");
+            alert.setContentText("Search term not found");
+            alert.showAndWait();
+        }
+        else{
+            index = Inventory.lookupProduct(search);
+        }
         System.out.println("Product search button pressed!");
     }
 
     @FXML
     void productAddBtnMain(ActionEvent event) throws IOException {
-            System.out.println("Product add pressed!");
             showAddProductScreen(event);
         }
     @FXML
@@ -143,39 +149,29 @@ public class MainScreenController implements Initializable {
         modifyProduct = ProductsTableMain.getSelectionModel().getSelectedItem();
         modifyProductIndex = getAllProducts().indexOf(modifyProduct);
         showModifyProductScreen(event);
-        System.out.println("Product modify pressed!");
     }
     @FXML
     void productDeleteBtnMain(ActionEvent event) throws IOException {
-        System.out.println("Product delete pressed!");
+        Product product = ProductsTableMain.getSelectionModel().getSelectedItem();
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.initModality(Modality.NONE);
+        alert.setTitle("Product Deletion");
+        alert.setHeaderText("Confirm?");
+        alert.setContentText("Are you sure you want to delete " + product.getName() + "?");
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK){
+            deleteProduct(product);
+            updatePartsTable();
+            System.out.println("Part " + product.getName() + " removed.");
+        }
+        else{
+            System.out.println("Part " + product.getName() + " was not removed.");
+        }
     }
 
-    public void startMain(Stage stage) throws IOException {
-        Parent partPageParent = FXMLLoader.load(getClass().getResource("MainScreen.fxml"));
-        Scene partPageScene = new Scene(partPageParent);
-        stage.setScene(partPageScene);
-        stage.show();
-    }
-
-    @FXML
-    void accessProduct(ActionEvent event) throws IOException{
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("ModifyProductScreen.fxml"));
-        Parent productPageParent = loader.load();
-
-        Scene productPageScene = new Scene (productPageParent);
-        Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-        //ProductScreenController controller = loader.getController();
-        //controller.startProduct();
-
-        appStage.hide();
-        appStage.setScene(productPageScene);
-        appStage.show();
-    }
 
     public void showAddPartScreen(ActionEvent event) throws IOException{
-        Parent addParts = FXMLLoader.load(getClass().getResource("AddPartScreen.fxml"));
+        Parent addParts = FXMLLoader.load(getClass().getResource("AddPartScreen.fxml"));            // methods to show different screens
         Scene scene = new Scene(addParts);
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(scene);
@@ -207,19 +203,14 @@ public class MainScreenController implements Initializable {
         window.show();
     }
 
-    public void showMainScreen(ActionEvent event) throws IOException{
-        Parent mainScreen = FXMLLoader.load(getClass().getResource("MainScreen.fxml"));
-        Scene scene = new Scene(mainScreen);
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        window.setScene(scene);
-        window.show();
-    }
 
     public static int getModifyPartIndex(){
         return modifyPartIndex;
-    }
+    }                                                               // get index of part/product to modify
 
     public static int getModifyProductIndex(){ return modifyProductIndex;}
+
+
     @Override
     public void initialize(URL url, ResourceBundle rb){
         PartIdColPartsTableMain.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());

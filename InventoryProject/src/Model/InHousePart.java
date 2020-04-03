@@ -14,7 +14,7 @@ public class InHousePart extends Part {
 
     public void setMachineId(int machineId){
         this.machineId.set(machineId);
-    }
+    }                                    // setters and getters for unique machine id
 
     public int getMachineId(){
         return this.machineId.get();
